@@ -14,6 +14,7 @@ in {
     enable = true;
     xwayland.enable = true;
     extraConfig = ''
+    monitor=,highres,auto,1
     exec-once = waybar
     $mod = SUPER
     bind = $mod, T, exec, kitty
@@ -29,6 +30,11 @@ in {
     bind = $mod, down, movefocus, d
     bind = $mod SHIFT, right, movewindow, r
     bind = $mod SHIFT, up, movewindow, u
+    bind = , xf86monbrightnessup, exec, brightnessctl set 5%+
+    bind = , xf86monbrightnessdown, exec, brightnessctl set 5%-
+    bind = , xf86audioraisevolume, exec, wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+
+    bind = , xf86audiolowervolume, exec, wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-
+    bind = , xf86audiomute, exec, wpctl set-mute @DEFAULT_SINK@ toggle
     # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
     ${builtins.concatStringsSep "\n" (builtins.genList (
         x: let
@@ -45,7 +51,11 @@ in {
     # ...
     '';
   };
-
+  programs.git = {
+     enable = true;
+     userName = "Andrew Noonan";
+     userEmail = "Andrewnoonan@mailbox.org";
+     };
   programs.home-manager.enable = true;
   home.username = "andrew";
   home.homeDirectory = "/home/andrew/";
@@ -84,7 +94,7 @@ in {
     gnomeExtensions.weather-oclock
     gnomeExtensions.tiling-assistant
     gnome.gedit
-    git
+
   ];  
 
   home.stateVersion = "23.05";  # Use the NixOS version you're running.

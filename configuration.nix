@@ -64,9 +64,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  environment.sessionVariables = {
-     NIXOS_OZONE_WL = "1";
-     };
      services.dbus.enable = true;
      xdg.portal.extraPortals = [ 
      pkgs.xdg-desktop-portal-hyprland];
@@ -79,13 +76,25 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    };
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -123,14 +132,16 @@
   foot
   networkmanagerapplet
   rofi-wayland
-  vscode
+  vscodium
   wlogout
   papirus-icon-theme
   noto-fonts
   noto-fonts-emoji
-  intel-media-driver
-  vaapiIntel
-
+  brightnessctl
+  obs-studio
+  swayidle
+  swaylock
+  wireplumber
   ];
 nixpkgs.overlays = [
   (self: super: {
@@ -139,7 +150,7 @@ nixpkgs.overlays = [
     });
   })
 ];
-fonts.fonts = with pkgs; [
+fonts.packages = with pkgs; [
   nerdfonts
   ];
   # Some programs need SUID wrappers, can be configured further or are
@@ -151,7 +162,8 @@ fonts.fonts = with pkgs; [
  };
 
   # List services that you want to enable:
-
+   services.tlp.enable = true;
+   services.power-profiles-daemon.enable = false;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
