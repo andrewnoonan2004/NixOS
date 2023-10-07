@@ -17,9 +17,12 @@
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  programs.hyprland.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  #Enabling fish
+  programs.fish.enable = true;
+  users.users.andrew.shell = pkgs.fish;
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -61,6 +64,12 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  environment.sessionVariables = {
+     NIXOS_OZONE_WL = "1";
+     };
+     services.dbus.enable = true;
+     xdg.portal.extraPortals = [ 
+     pkgs.xdg-desktop-portal-hyprland];
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -98,8 +107,41 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   home-manager
-  ];
+  hyprland
+  swww
+  xwayland
+  waybar
+  meson
+  wayland-protocols
+  wayland-utils
+  wl-clipboard
+  wlroots
+  pavucontrol
+  dunst
+  libnotify
+  kitty
+  foot
+  networkmanagerapplet
+  rofi-wayland
+  vscode
+  wlogout
+  papirus-icon-theme
+  noto-fonts
+  noto-fonts-emoji
+  intel-media-driver
+  vaapiIntel
 
+  ];
+nixpkgs.overlays = [
+  (self: super: {
+    waybar = super.waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    });
+  })
+];
+fonts.fonts = with pkgs; [
+  nerdfonts
+  ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
