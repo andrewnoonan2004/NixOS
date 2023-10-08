@@ -16,6 +16,23 @@ in {
     extraConfig = ''
     monitor=,highres,auto,1
     exec-once = waybar
+    exec-once = swaybg -i /home/andrew/Downloads/eberhard-grossgasteiger-LmqySFs3TQQ-unsplash.jpg -m fill
+    exec-once = wlsunset -t 3000 -s 21:00
+    misc {
+    disable_hyprland_logo = true
+    enable_swallow = true
+    swallow_regex = ^(kitty)$
+    }
+    gestures {
+    workspace_swipe = true
+    workspace_swipe_fingers = 3
+    }
+    general {
+    gaps_out = 1
+    }
+    decoration {
+    rounding = 3
+    }
     $mod = SUPER
     bind = $mod, T, exec, kitty
     bind = $mod, W, exec, librewolf
@@ -35,6 +52,7 @@ in {
     bind = , xf86audioraisevolume, exec, wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%+
     bind = , xf86audiolowervolume, exec, wpctl set-volume -l 1.0 @DEFAULT_SINK@ 5%-
     bind = , xf86audiomute, exec, wpctl set-mute @DEFAULT_SINK@ toggle
+    bind = $mod SHIFT, c, exec, wlogout
     # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
     ${builtins.concatStringsSep "\n" (builtins.genList (
         x: let
@@ -60,43 +78,28 @@ in {
   home.username = "andrew";
   home.homeDirectory = "/home/andrew/";
   programs.fish.enable = true;
-  home.packages = with pkgs; [
-    # List of user-specific packages you want to install
-    bemenu
-    neovim
-    firefox
-    librewolf
-    thunderbird
-    bitwarden
-    gnome-podcasts
-    mpv
-    yt-dlp
-    ani-cli
-    jdk17
-    pipx
-    neovim
-    blackbox-terminal
-    distrobox
-    shortwave
-    powertop
-    intel-gpu-tools
-    papirus-icon-theme
-    adw-gtk3
-    gnome.gnome-tweaks
-    gradience
-    gnome-extension-manager
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.appindicator
-    gnomeExtensions.freon
-    lm_sensors
-    fish
-    gnomeExtensions.weather-oclock
-    gnomeExtensions.tiling-assistant
-    gnome.gedit
-
-  ];  
-
+  programs.waybar.enable = true;
+  programs.waybar.settings = 
+  {
+  mainBar = {
+  layer = "top";
+  position = "top";
+  exclusive = true;
+  passthrough = false;
+  gtk-layer-shell = true;
+  height = 30;
+  width = 1920;
+  output = "eDP-1";
+  "modules-left" = ["hyprland/workspaces"];
+  "modules-center" = ["clock" "hyprland/window" ];
+  "modules-right" = ["pulseaudio" "network" "cpu" "memory" "backlight"];
+  "clock" = {
+        "timezone" = "America/New_York";
+        "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        "format-alt" = "{:%Y-%m-%d}";
+    };
+  };
+};
   home.stateVersion = "23.05";  # Use the NixOS version you're running.
 }
 
