@@ -51,11 +51,7 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
+ # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "";
@@ -148,31 +144,19 @@
   librewolf
   thunderbird
   bitwarden
-  gnome-podcasts
   mpv
   yt-dlp
   ani-cli
   jdk17
   pipx
   neovim
-  blackbox-terminal
   distrobox
-  shortwave
   powertop
   intel-gpu-tools
   papirus-icon-theme
   adw-gtk3
-  gnome.gnome-tweaks
-  gradience
-  gnome-extension-manager
-  gnomeExtensions.dash-to-dock
-  gnomeExtensions.blur-my-shell
-  gnomeExtensions.appindicator
-  gnomeExtensions.freon
   lm_sensors
   fish
-  gnomeExtensions.weather-oclock
-  gnomeExtensions.tiling-assistant
   gnome.gedit
   ytfzf
   libreoffice

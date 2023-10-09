@@ -100,6 +100,6 @@ in {
     };
   };
 };
-  home.stateVersion = "23.05";  # Use the NixOS version you're running.
+  home.stateVersion = "23.11";  # Use the NixOS version you're running.
 }
 
