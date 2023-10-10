@@ -100,6 +100,13 @@ in {
     };
   };
 };
+programs.kitty =
+{
+enable = true;
+settings ={
+background_opacity = 0.4;
+}
+};
   home.stateVersion = "23.11";  # Use the NixOS version you're running.
 }
 

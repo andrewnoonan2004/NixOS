@@ -164,6 +164,9 @@
   swaybg
   font-awesome
   wlsunset
+  fastfetch
+  qutebrowser
+  zathura
   ];
 nixpkgs.overlays = [
   (self: super: {
