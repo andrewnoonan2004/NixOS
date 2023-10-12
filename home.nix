@@ -35,9 +35,11 @@ in {
     }
     $mod = SUPER
     bind = $mod, T, exec, kitty
-    bind = $mod, W, exec, librewolf
+    bind = $mod, W, exec, qutebrowser
     bind = , Print, exec, grimblast copy area
     bind = $mod, R, exec, rofi -show drun -show-icons
+    bind = $mod, B, exec, bitwarden
+    bind = $mod, M, exec, rhythmbox
     bind = $mod, Q, killactive
     bind = $mod, F, fullscreen
     bind = $mod, Space, togglefloating
@@ -104,9 +106,16 @@ programs.kitty =
 {
 enable = true;
 settings ={
-background_opacity = 0.4;
-}
+background_opacity = "0.4";
 };
+};
+gtk = {
+  enable = true;
+  theme = {
+  name = "Materia-dark";
+  package = pkgs.materia-theme;
+  };
+  };
   home.stateVersion = "23.11";  # Use the NixOS version you're running.
 }
 

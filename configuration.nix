@@ -18,6 +18,8 @@
   system.autoUpgrade.allowReboot = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   programs.hyprland.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #Enabling fish
@@ -141,7 +143,6 @@
   bemenu
   neovim
   firefox
-  librewolf
   thunderbird
   bitwarden
   mpv
@@ -164,9 +165,19 @@
   swaybg
   font-awesome
   wlsunset
-  fastfetch
   qutebrowser
   zathura
+  nwg-look
+  acpi
+  adw-gtk3
+  rhythmbox
+  snowblind
+  gnome.gnome-tweaks
+  gnomeExtensions.dash-to-dock
+  gnomeExtensions.appindicator
+  gnomeExtensions.blur-my-shell
+  nuclear
+  gnomeExtensions.tiling-assistant
   ];
 nixpkgs.overlays = [
   (self: super: {
